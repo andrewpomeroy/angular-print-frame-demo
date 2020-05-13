@@ -7,11 +7,11 @@ export default {
 		inheritStyles: "<"
 	},
 	template: `
-		<div class="FlexView">
+		<div>
 			<div ng-transclude="ui"></div>
 			<div>
 				<iframe id="printDestinationIframe" class="u-visuallyHidden"></iframe>
-				<div ng-transclude="content" class="FlexView u-visuallyHidden"></div>
+				<div ng-transclude="content" class="u-visuallyHidden"></div>
 			</div>
 		</div>`,
 	transclude: {
