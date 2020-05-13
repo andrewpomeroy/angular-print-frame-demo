@@ -1,0 +1,29 @@
+.FlexView {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0px;
+  justify-content: flex-start;
+  align-items: stretch;
+}
+@media print {
+  .FlexView {
+    height: 100%;
+  }
+}
+
+.u-visuallyHidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  position: absolute !important;
+}
+
+.test-component-border {
+  padding: 1rem;
+  border: 1px solid black;
+  background: hsl(0, 0%, 80%);
+}
