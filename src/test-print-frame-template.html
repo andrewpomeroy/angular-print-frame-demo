@@ -2,7 +2,7 @@
 <h4>And the preview of the component we want to print is below:</h4>
 <test-component prop="'example prop value'"></test-component>
 <h3>And here's the button to print an isolated copy of that component:</h3>
-<print-frame>
+<print-frame inherit-styles="true">
   <ui>
     <button ng-click="$parent.$ctrl.requestPrint()">Print</button>
   </ui>

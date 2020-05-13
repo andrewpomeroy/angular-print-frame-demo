@@ -3,6 +3,9 @@
  */
 export default {
 	controller: controller,
+	bindings: {
+		inheritStyles: "<"
+	},
 	template: `
 		<div class="FlexView">
 			<div ng-transclude="ui"></div>
@@ -11,32 +14,50 @@ export default {
 				<div ng-transclude="content" class="FlexView u-visuallyHidden"></div>
 			</div>
 		</div>`,
-	replace: true,
 	transclude: {
 		"content": "content",
 		"ui": "?ui",
 	},
 };
 
-controller.$inject = ["$scope"];
+controller.$inject = ["$scope", "$timeout"];
 
 // eslint-disable-next-line
-function controller($scope) {
+function controller($scope, $timeout) {
+	var $ctrl = this;
 
-	this.requestPrint = function () {
+	$ctrl.requestPrint = function () {
 		$scope.$broadcast("requestFrameContents");
 	};
 
-	this.print = function (html) {
+	$ctrl.$postLink = function () {
 		const target = document.getElementById("printDestinationIframe");
-		const template = `
-			${html}
-			<script type="text/javascript">
-				window.print()
-			</script>	
-		`;
 		target.contentWindow.document.body.innerHTML = "";
-		target.contentWindow.document.write(template);
+		if ($ctrl.inheritStyles) {
+			var targetHead = target.contentWindow.document.head;
+			var arrStyleSheets = document.getElementsByTagName("style");
+			for (var i = 0; i < arrStyleSheets.length; i++)
+				targetHead.appendChild(arrStyleSheets[i].cloneNode(true));
+			var arrStyleSheetLinks = document.querySelectorAll("link[rel=\"stylesheet\"]");
+			for (var i = 0; i < arrStyleSheetLinks.length; i++)
+				targetHead.appendChild(arrStyleSheetLinks[i].cloneNode(true));
+		}
+	};
+
+	$ctrl.print = function (html) {
+		const target = document.getElementById("printDestinationIframe");
+		const targetDoc = target.contentWindow.document;
+		targetDoc.body.innerHTML = html;
+		var script = targetDoc.createElement("script");
+		script.type = "text/javascript";
+		var code = "window.print();";
+		try {
+			script.appendChild(targetDoc.createTextNode(code));
+			targetDoc.body.appendChild(script);
+		} catch (e) {
+			script.text = code;
+			targetDoc.body.appendChild(script);
+		}
 	};
 
 }
