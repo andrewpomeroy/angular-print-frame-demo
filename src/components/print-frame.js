@@ -29,14 +29,14 @@ function controller($scope) {
 
 	this.print = function (html) {
 		const target = document.getElementById("printDestinationIframe");
-		const newBody = `
-			<body>
-				${html}
-				<script type="text/javascript">
-					window.print()
-				</script>	
-			</body>`;
-		target.contentWindow.document.write(newBody);
+		const template = `
+			${html}
+			<script type="text/javascript">
+				window.print()
+			</script>	
+		`;
+		target.contentWindow.document.body.innerHTML = "";
+		target.contentWindow.document.write(template);
 	};
 
 }
