@@ -1,7 +1,7 @@
 "use strict";
 /**
  */
-export default {
+var printFrameSource = {
 	require: {
 		printFrame: "^printFrame"
 	},
@@ -21,3 +21,5 @@ function controller($timeout, $element, $scope, $state, $q, $window) {
 	});
 
 }
+
+angular.module("wnd").component("printFrameSource", printFrameSource)

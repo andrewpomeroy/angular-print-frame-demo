@@ -1,7 +1,7 @@
 "use strict";
 /**
  */
-export default {
+var printFrame = {
 	controller: controller,
 	bindings: {
 		inheritStyles: "<"
@@ -61,3 +61,5 @@ function controller($scope, $timeout) {
 	};
 
 }
+
+angular.module("wnd").component("printFrame", printFrame)
